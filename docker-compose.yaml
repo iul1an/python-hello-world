@@ -1,0 +1,20 @@
+version: '3'
+services:
+  python-hello-world:
+    container_name: python-hello-world
+    build: .
+    networks:
+    - python-hello-world-network
+  python-hello-world-nginx:
+    image: nginx:1.19.1-alpine
+    container_name: python-hello-world-nginx
+    ports:
+    - 8080:80
+    volumes: 
+    - ./config/vhost.conf:/etc/nginx/conf.d/default.conf
+    networks:
+    - python-hello-world-network
+    depends_on:
+    - python-hello-world
+networks:
+  python-hello-world-network:
